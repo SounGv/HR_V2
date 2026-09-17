@@ -1,0 +1,153 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/features/auth/auth-context";
+import { useLeave } from "@/features/leave/hooks";
+import { useOvertime } from "@/features/overtime/hooks";
+import { useMyPendingResponses } from "@/features/campaign/hooks";
+import { useNotifications } from "@/features/notification/hooks";
+import { cn } from "@/lib/utils";
+import { MenuGlyph, type MenuGlyphId } from "@/components/mobile/menu-glyphs";
+
+/**
+ * 5-slot flat bottom tab bar for phones — hidden on md+. Three role-variant
+ * tab sets per the redesign spec (Employee / Manager / HR), sharing the
+ * same live-badge data sources — only which tabs carry which counts (and
+ * which pages the middle 3 slots point at) changes per role:
+ *   Employee: หน้าหลัก · ปฏิทิน · คำขอ · ประเมิน · โปรไฟล์
+ *   Manager:  หน้าหลัก · ทีมของฉัน · อนุมัติ · ประเมิน · โปรไฟล์
+ *   HR:       Dashboard · พนักงาน · คำขอ · รายงาน · โปรไฟล์
+ *
+ * Icons are the same illustrated objects as the mobile menu grid so the
+ * tab bar reads as a colorful, real-world set (house, people, check, chart)
+ * rather than monochrome Lucide outlines.
+ */
+export function MobileBottomNav() {
+  const pathname = usePathname();
+  const { can, canAny } = useAuth();
+
+  const canApproveLeave = canAny(["leave:approve", "leave:manage"]);
+  const canApproveOt = canAny(["overtime:approve", "overtime:manage"]);
+  const canApprove = canApproveLeave || canApproveOt;
+  const leavePendingQ = useLeave("team", "PENDING", { enabled: canApproveLeave });
+  const otPendingQ = useOvertime("team", "PENDING", { enabled: canApproveOt });
+  const pendingCount = (leavePendingQ.data?.data.length ?? 0) + (otPendingQ.data?.data.length ?? 0);
+
+  const canReview = can("performance:read");
+  const pendingReviewsQ = useMyPendingResponses();
+  const pendingReviewCount = canReview ? (pendingReviewsQ.data?.data.length ?? 0) : 0;
+
+  const notificationsQ = useNotifications();
+  const unreadCount = notificationsQ.data?.data.unread ?? 0;
+
+  const isHrTier = can("employee:update");
+  const isManagerTier = !isHrTier && canApprove;
+
+  const isActive = (href: string) => {
+    const path = href.split("?")[0];
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
+
+  const profileTab = {
+    href: "/profile",
+    label: "โปรไฟล์",
+    glyph: "person" as MenuGlyphId,
+    show: true,
+    badge: unreadCount,
+  };
+
+  const tabs = isHrTier
+    ? [
+        { href: "/dashboard", label: "หน้าหลัก", glyph: "house" as const, show: true, badge: 0 },
+        { href: "/employees", label: "พนักงาน", glyph: "people" as const, show: can("employee:read"), badge: 0 },
+        {
+          href: "/requests?view=approvals",
+          label: "คำขอ",
+          glyph: "checkBadge" as const,
+          show: can("leave:read") || can("overtime:read"),
+          badge: pendingCount,
+        },
+        { href: "/reports", label: "รายงาน", glyph: "bars" as const, show: can("report:read"), badge: 0 },
+        profileTab,
+      ]
+    : isManagerTier
+      ? [
+          { href: "/dashboard", label: "หน้าหลัก", glyph: "house" as const, show: true, badge: 0 },
+          { href: "/employees", label: "ทีมของฉัน", glyph: "people" as const, show: can("employee:read"), badge: 0 },
+          {
+            href: "/requests?view=approvals",
+            label: "อนุมัติ",
+            glyph: "checkBadge" as const,
+            show: can("leave:read") || can("overtime:read"),
+            badge: pendingCount,
+          },
+          { href: "/performance", label: "ประเมิน", glyph: "clipboardStar" as const, show: canReview, badge: pendingReviewCount },
+          profileTab,
+        ]
+      : [
+          { href: "/dashboard", label: "หน้าหลัก", glyph: "house" as const, show: true, badge: 0 },
+          { href: "/calendar", label: "ปฏิทิน", glyph: "calendar" as const, show: can("calendar:read"), badge: 0 },
+          {
+            href: "/requests",
+            label: "คำขอ",
+            glyph: "clipboard" as const,
+            show: can("leave:read") || can("overtime:read"),
+            badge: 0,
+          },
+          { href: "/performance", label: "ประเมิน", glyph: "clipboardStar" as const, show: canReview, badge: pendingReviewCount },
+          profileTab,
+        ];
+
+  const visibleTabs = tabs.filter((t) => t.show);
+
+  return (
+    <nav
+      aria-label="เมนูลัด"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] md:hidden"
+    >
+      <div
+        className="mx-auto grid h-16 max-w-md items-center px-1"
+        style={{ gridTemplateColumns: `repeat(${visibleTabs.length}, minmax(0, 1fr))` }}
+      >
+        {visibleTabs.map((t) => (
+          <NavTab key={t.href} href={t.href} label={t.label} glyph={t.glyph} active={isActive(t.href)} badge={t.badge} />
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+function NavTab({
+  href,
+  label,
+  glyph,
+  active,
+  badge,
+}: {
+  href: string;
+  label: string;
+  glyph: MenuGlyphId;
+  active: boolean;
+  badge: number;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "flex h-full flex-col items-center justify-center gap-0.5 transition active:scale-95",
+        active ? "font-bold text-[#15803d]" : "text-[#374151]",
+      )}
+    >
+      <span className={cn("relative flex items-center justify-center rounded-full px-2.5 py-0.5", active && "bg-[#bbf7d0]")}>
+        <MenuGlyph id={glyph} size={26} />
+        {badge > 0 && (
+          <span className="absolute -top-1 -right-0.5 flex min-w-4 items-center justify-center rounded-full bg-badge px-1 text-[9px] font-semibold text-badge-foreground ring-2 ring-card">
+            {badge > 9 ? "9+" : badge}
+          </span>
+        )}
+      </span>
+      <span className="text-[12px] font-semibold whitespace-nowrap">{label}</span>
+    </Link>
+  );
+}
