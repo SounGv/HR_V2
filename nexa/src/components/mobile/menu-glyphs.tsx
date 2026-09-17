@@ -16,6 +16,8 @@ export type MenuGlyphId =
   | "palm"
   | "bills"
   | "moneyBag"
+  | "wingedDollar"
+  | "scroll"
   | "heart"
   | "target"
   | "clipboard"
@@ -33,17 +35,18 @@ export type MenuGlyphId =
   | "apps"
   | "generic";
 
+/** MUTD HR object language → GV One menu ids (original SVGs, not emoji art). */
 const MENU_ITEM_GLYPHS: Record<string, MenuGlyphId> = {
   checkin: "clock",
   timeedit: "alarm",
-  shift: "shift",
+  shift: "calendar",
   calendar: "calendar",
   leave: "palm",
   overtime: "alarm",
   expense: "bills",
   benefits: "heart",
   kpi: "target",
-  review: "clipboardStar",
+  review: "clipboard",
   meeting: "meeting",
   emplist: "people",
   dailyemp: "person",
@@ -98,21 +101,22 @@ function House({ size = 40 }: GlyphProps) {
     <Frame size={size}>
       <defs>
         <SoftShadow id={s} />
-        <linearGradient id={`${s}-r`} x1="12" y1="14" x2="36" y2="22">
+        <linearGradient id={`${s}-r`} x1="12" y1="10" x2="36" y2="24">
           <stop stopColor="#F4A24A" />
-          <stop offset="1" stopColor="#E07A2F" />
+          <stop offset="1" stopColor="#D97706" />
         </linearGradient>
         <linearGradient id={`${s}-w`} x1="14" y1="22" x2="34" y2="42">
           <stop stopColor="#FFF6E8" />
-          <stop offset="1" stopColor="#F0D9B0" />
+          <stop offset="1" stopColor="#E8C9A0" />
         </linearGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <path d="M8 22.5 L24 9.5 L40 22.5 V24.5 L24 12 L8 24.5 Z" fill={`url(#${s}-r)`} />
-        <path d="M11 23.5 H37 V40.5 C37 41.6 36.1 42.5 35 42.5 H13 C11.9 42.5 11 41.6 11 40.5 Z" fill={`url(#${s}-w)`} />
-        <rect x="20.5" y="29" width="7" height="13.5" rx="1.2" fill="#8B5A2B" />
-        <rect x="15" y="27" width="6.5" height="6.5" rx="1" fill="#7EC8E3" />
-        <rect x="26.5" y="27" width="6.5" height="6.5" rx="1" fill="#7EC8E3" />
+        <path d="M7.5 22.8 L24 9.2 L40.5 22.8 V25 L24 11.6 L7.5 25 Z" fill={`url(#${s}-r)`} />
+        <rect x="30.2" y="10.8" width="3.6" height="8" rx="0.7" fill="#B45309" />
+        <path d="M10.5 23.2 H37.5 V40.6 C37.5 41.7 36.6 42.6 35.5 42.6 H12.5 C11.4 42.6 10.5 41.7 10.5 40.6 Z" fill={`url(#${s}-w)`} />
+        <rect x="20.4" y="29.4" width="7.4" height="13.2" rx="1" fill="#8B5A2B" />
+        <rect x="14" y="27" width="6.2" height="6.2" rx="1" fill="#7DD3FC" />
+        <rect x="27.8" y="27" width="6.2" height="6.2" rx="1" fill="#7DD3FC" />
       </g>
     </Frame>
   );
@@ -124,17 +128,19 @@ function CheckBadge({ size = 40 }: GlyphProps) {
     <Frame size={size}>
       <defs>
         <SoftShadow id={s} />
-        <linearGradient id={`${s}-g`} x1="10" y1="8" x2="38" y2="40">
-          <stop stopColor="#3DDC84" />
-          <stop offset="1" stopColor="#16A34A" />
+        <linearGradient id={`${s}-g`} x1="10" y1="6" x2="38" y2="42">
+          <stop stopColor="#4ADE80" />
+          <stop offset="0.45" stopColor="#22C55E" />
+          <stop offset="1" stopColor="#15803D" />
         </linearGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="8" y="8" width="32" height="32" rx="10" fill={`url(#${s}-g)`} />
+        <rect x="7" y="7" width="34" height="34" rx="8" fill={`url(#${s}-g)`} />
+        <path d="M11 12 H37" stroke="#86EFAC" strokeWidth="3" strokeLinecap="round" opacity="0.55" />
         <path
-          d="M16.5 24.2 L21.4 29.1 L32.2 18.2"
+          d="M15.5 24.8 L21.6 30.6 L33.2 17.6"
           stroke="#fff"
-          strokeWidth="3.6"
+          strokeWidth="4.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -212,9 +218,13 @@ function Bars({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="9" y="26" width="8" height="14" rx="2" fill="#60A5FA" />
-        <rect x="20" y="16" width="8" height="24" rx="2" fill="#34D399" />
-        <rect x="31" y="21" width="8" height="19" rx="2" fill="#FBBF24" />
+        <rect x="8.5" y="26.5" width="8" height="13.5" rx="1.4" fill="#4ADE80" />
+        <rect x="20" y="16" width="8" height="24" rx="1.4" fill="#3B82F6" />
+        <rect x="31.5" y="21.5" width="8" height="18.5" rx="1.4" fill="#F5C542" />
+        <path d="M12.5 24.2 L24 15.6 L35.5 20.2" stroke="#2563EB" strokeWidth="2.1" fill="none" strokeLinejoin="round" />
+        <circle cx="12.5" cy="24.2" r="2.05" fill="#2563EB" />
+        <circle cx="24" cy="15.6" r="2.05" fill="#2563EB" />
+        <circle cx="35.5" cy="20.2" r="2.05" fill="#2563EB" />
       </g>
     </Frame>
   );
@@ -228,18 +238,21 @@ function Calendar({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
         <linearGradient id={`${s}-p`} x1="10" y1="10" x2="38" y2="18">
           <stop stopColor="#F87171" />
-          <stop offset="1" stopColor="#DC2626" />
+          <stop offset="1" stopColor="#B91C1C" />
         </linearGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="8.5" y="11" width="31" height="28" rx="6" fill="#FFFDF8" stroke="#E7D7C3" />
-        <rect x="8.5" y="11" width="31" height="10" rx="6" fill={`url(#${s}-p)`} />
-        <rect x="8.5" y="17" width="31" height="4" fill={`url(#${s}-p)`} />
-        <circle cx="16" cy="11" r="2.1" fill="#7F1D1D" />
-        <circle cx="32" cy="11" r="2.1" fill="#7F1D1D" />
-        <rect x="14" y="25.5" width="5" height="5" rx="1" fill="#E5E7EB" />
-        <rect x="21.5" y="25.5" width="5" height="5" rx="1" fill="#E5E7EB" />
-        <rect x="29" y="25.5" width="5" height="5" rx="1" fill="#16A34A" />
+        <rect x="8" y="11.5" width="32" height="28.5" rx="5" fill="#FFFDF8" stroke="#E7D7C3" />
+        <rect x="8" y="11.5" width="32" height="9.5" rx="5" fill={`url(#${s}-p)`} />
+        <rect x="8" y="17" width="32" height="4" fill={`url(#${s}-p)`} />
+        <circle cx="15.4" cy="11.5" r="2.15" fill="#7F1D1D" />
+        <circle cx="32.6" cy="11.5" r="2.15" fill="#7F1D1D" />
+        <rect x="13" y="24.2" width="4.8" height="4.8" rx="0.8" fill="#E5E7EB" />
+        <rect x="21.6" y="24.2" width="4.8" height="4.8" rx="0.8" fill="#E5E7EB" />
+        <rect x="30.2" y="24.2" width="4.8" height="4.8" rx="0.8" fill="#22C55E" />
+        <rect x="13" y="31.4" width="4.8" height="4.8" rx="0.8" fill="#E5E7EB" />
+        <rect x="21.6" y="31.4" width="4.8" height="4.8" rx="0.8" fill="#E5E7EB" />
+        <rect x="30.2" y="31.4" width="4.8" height="4.8" rx="0.8" fill="#E5E7EB" />
       </g>
     </Frame>
   );
@@ -253,14 +266,25 @@ function CalendarDate({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="8.5" y="10" width="31" height="29" rx="6" fill="#FFFDF8" stroke="#E7D7C3" />
-        <rect x="8.5" y="10" width="31" height="9" rx="6" fill="#EF4444" />
-        <rect x="8.5" y="15" width="31" height="4" fill="#EF4444" />
+        <rect x="9" y="8" width="30" height="33" rx="4" fill="#FFF" stroke="#E5E7EB" />
+        <path d="M9 8 H39 V19 H9 Z" fill="#E11D2A" />
+        <path d="M9 8 H39 V12 C39 9.8 37.2 8 35 8 H13 C10.8 8 9 9.8 9 12 Z" fill="#E11D2A" />
         <text
           x="24"
-          y="36"
+          y="16.4"
           textAnchor="middle"
-          fontSize="14"
+          fontSize="6.4"
+          fontWeight="800"
+          fill="#fff"
+          fontFamily="ui-sans-serif, system-ui"
+        >
+          July
+        </text>
+        <text
+          x="24"
+          y="36.6"
+          textAnchor="middle"
+          fontSize="16"
           fontWeight="800"
           fill="#1F2937"
           fontFamily="ui-sans-serif, system-ui"
@@ -280,14 +304,26 @@ function Clock({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
         <radialGradient id={`${s}-f`} cx="0.35" cy="0.3" r="0.8">
           <stop stopColor="#FFFFFF" />
-          <stop offset="1" stopColor="#E5EEF5" />
+          <stop offset="1" stopColor="#F1F5F9" />
         </radialGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <circle cx="24" cy="25" r="15" fill={`url(#${s}-f)`} stroke="#94A3B8" strokeWidth="2" />
-        <circle cx="24" cy="25" r="1.8" fill="#0F172A" />
-        <path d="M24 25 L24 16.5" stroke="#0F172A" strokeWidth="2.4" strokeLinecap="round" />
-        <path d="M24 25 L31 28" stroke="#DC2626" strokeWidth="2.2" strokeLinecap="round" />
+        <circle cx="24" cy="24.8" r="15.6" fill="#D1D5DB" />
+        <circle cx="24" cy="24.8" r="13.2" fill={`url(#${s}-f)`} />
+        <g stroke="#111" strokeWidth="1.15" strokeLinecap="round">
+          <path d="M24 13.2 V15.4" />
+          <path d="M24 34.2 V36.4" />
+          <path d="M13.2 24.8 H15.4" />
+          <path d="M32.6 24.8 H34.8" />
+          <path d="M16.4 17.2 L17.8 18.6" />
+          <path d="M30.2 31 L31.6 32.4" />
+          <path d="M16.4 32.4 L17.8 31" />
+          <path d="M30.2 18.6 L31.6 17.2" />
+        </g>
+        <path d="M24 24.8 V16.2" stroke="#111" strokeWidth="2.4" strokeLinecap="round" />
+        <path d="M24 24.8 L31.6 28.8" stroke="#111" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M24 24.8 L34.4 24.8" stroke="#E11D2A" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="24" cy="24.8" r="1.8" fill="#111" />
       </g>
     </Frame>
   );
@@ -299,14 +335,28 @@ function Alarm({ size = 40 }: GlyphProps) {
     <Frame size={size}>
       <defs>
         <SoftShadow id={s} />
+        <linearGradient id={`${s}-r`} x1="12" y1="8" x2="36" y2="40">
+          <stop stopColor="#F87171" />
+          <stop offset="1" stopColor="#B91C1C" />
+        </linearGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <path d="M12 14 L6.5 9.5" stroke="#F87171" strokeWidth="3" strokeLinecap="round" />
-        <path d="M36 14 L41.5 9.5" stroke="#F87171" strokeWidth="3" strokeLinecap="round" />
-        <circle cx="24" cy="26" r="14" fill="#F8FAFC" stroke="#EF4444" strokeWidth="3.2" />
-        <circle cx="24" cy="26" r="1.6" fill="#0F172A" />
-        <path d="M24 26 L24 18" stroke="#0F172A" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M24 26 L30 29.5" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" />
+        <ellipse cx="14" cy="11.4" rx="5.3" ry="4.3" fill={`url(#${s}-r)`} />
+        <ellipse cx="34" cy="11.4" rx="5.3" ry="4.3" fill={`url(#${s}-r)`} />
+        <circle cx="24" cy="26.4" r="15.2" fill={`url(#${s}-r)`} />
+        <circle cx="24" cy="26.4" r="11.5" fill="#FAFAFA" />
+        <g stroke="#111" strokeWidth="1.25" strokeLinecap="round">
+          <path d="M24 16.1 V17.9" />
+          <path d="M24 34.9 V36.7" />
+          <path d="M14.5 26.4 H16.3" />
+          <path d="M31.7 26.4 H33.5" />
+        </g>
+        <path d="M24 26.4 V18.5" stroke="#111" strokeWidth="2.3" strokeLinecap="round" />
+        <path d="M24 26.4 H31.5" stroke="#111" strokeWidth="2.1" strokeLinecap="round" />
+        <path d="M24 26.4 L32.8 31.2" stroke="#E11D2A" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="24" cy="26.4" r="1.7" fill="#111" />
+        <path d="M16 40.4 L13.2 43.6" stroke="#B91C1C" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M32 40.4 L34.8 43.6" stroke="#B91C1C" strokeWidth="2.5" strokeLinecap="round" />
       </g>
     </Frame>
   );
@@ -320,12 +370,13 @@ function Palm({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
       </defs>
       <g filter={`url(#${s})`}>
-        <ellipse cx="24" cy="41" rx="13" ry="3.2" fill="#E8D5A3" />
-        <path d="M23 40 C21 28 22 18 24.5 12 C26.5 18 27.5 29 25.2 40 Z" fill="#C4A35A" />
-        <path d="M24.5 14 C14 10 9 16 11 20 C16 16 22 16 24.5 16 Z" fill="#22C55E" />
-        <path d="M24.5 14 C35 9 40 15 38 20 C33 16 27 16 24.5 16 Z" fill="#16A34A" />
-        <path d="M24.5 15 C20 6 13 6 12 11 C17 11 22 14 24.5 16 Z" fill="#4ADE80" />
-        <path d="M24.5 15 C29 6 36 6 37 11 C32 11 27 14 24.5 16 Z" fill="#22C55E" />
+        <ellipse cx="24" cy="42" rx="11.5" ry="2.7" fill="#E8C98A" />
+        <path d="M22.6 41 C21.4 30 22.2 20 24.4 13 C26.2 20 27 31 25.4 41 Z" fill="#A67C3D" />
+        <path d="M24.2 15 C13 8 8 14 11 19 C16 14 22 16 24.2 17 Z" fill="#22C55E" />
+        <path d="M24.2 15 C36 7 42 14 38 19 C33 14 27 16 24.2 17 Z" fill="#16A34A" />
+        <path d="M24.2 16 C18 5 11 6 11 12 C17 11 22 15 24.2 17 Z" fill="#4ADE80" />
+        <path d="M24.2 16 C31 5 38 6 38 12 C32 11 27 15 24.2 17 Z" fill="#22C55E" />
+        <path d="M24.2 17 C24.2 8 20 7 20 12 C22 13 24 16 24.2 17 Z" fill="#15803D" />
       </g>
     </Frame>
   );
@@ -339,11 +390,16 @@ function Bills({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="10" y="12" width="28" height="16" rx="3" fill="#86EFAC" transform="rotate(-8 24 20)" />
-        <rect x="9" y="18" width="30" height="18" rx="3" fill="#BBF7D0" stroke="#16A34A" strokeWidth="1.4" />
-        <circle cx="24" cy="27" r="5" fill="#FDE68A" stroke="#CA8A04" strokeWidth="1.2" />
-        <text x="24" y="30.2" textAnchor="middle" fontSize="8" fontWeight="800" fill="#A16207">
-          ฿
+        <g transform="rotate(-18 24 24)">
+          <rect x="10" y="10" width="28" height="16" rx="2.5" fill="#4ADE80" />
+        </g>
+        <g transform="rotate(-8 24 26)">
+          <rect x="9" y="16" width="30" height="17" rx="2.5" fill="#22C55E" />
+        </g>
+        <rect x="8.5" y="21" width="31" height="17.5" rx="2.5" fill="#15803D" />
+        <rect x="10.5" y="23.2" width="27" height="13.2" rx="1.6" fill="#86EFAC" />
+        <text x="24" y="33.2" textAnchor="middle" fontSize="11" fontWeight="800" fill="#14532D" fontFamily="ui-sans-serif, system-ui">
+          $
         </text>
       </g>
     </Frame>
@@ -356,17 +412,67 @@ function MoneyBag({ size = 40 }: GlyphProps) {
     <Frame size={size}>
       <defs>
         <SoftShadow id={s} />
-        <linearGradient id={`${s}-g`} x1="14" y1="12" x2="34" y2="42">
-          <stop stopColor="#FCD34D" />
+        <linearGradient id={`${s}-g`} x1="14" y1="10" x2="34" y2="42">
+          <stop stopColor="#FDE68A" />
+          <stop offset="0.45" stopColor="#F5C542" />
           <stop offset="1" stopColor="#D97706" />
         </linearGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <path d="M19 15 C19 12.5 21 10.5 24 10.5 C27 10.5 29 12.5 29 15 V17 H32 C34.2 17 35.5 19 35.5 21.5 C35.5 30 31 38.5 24 42 C17 38.5 12.5 30 12.5 21.5 C12.5 19 13.8 17 16 17 H19 V15 Z" fill={`url(#${s}-g)`} />
-        <path d="M19 17 H29" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
-        <text x="24" y="32" textAnchor="middle" fontSize="11" fontWeight="800" fill="#78350F">
+        <ellipse cx="24" cy="14.2" rx="3.3" ry="2.2" fill="#E8B230" />
+        <path d="M18.5 16.5 C18.5 14.1 20.7 12.1 24 12.1 C27.3 12.1 29.5 14.1 29.5 16.5 V17.7 H32.7 C34.9 17.7 36.5 19.8 36.3 22.1 C35.7 30.3 31.7 38.7 24 41.7 C16.3 38.7 12.2 30.3 11.6 22.1 C11.4 19.8 13 17.7 15.2 17.7 H18.5 V16.5 Z" fill={`url(#${s}-g)`} />
+        <path d="M18.5 17.8 H29.5" stroke="#C98912" strokeWidth="2.2" strokeLinecap="round" />
+        <ellipse cx="20" cy="24" rx="3" ry="5" fill="#FFE9A0" opacity="0.45" />
+        <text x="24" y="32.6" textAnchor="middle" fontSize="12" fontWeight="800" fill="#6B3F08" fontFamily="ui-sans-serif, system-ui">
           $
         </text>
+      </g>
+    </Frame>
+  );
+}
+
+function WingedDollar({ size = 40 }: GlyphProps) {
+  const s = useMark("wd");
+  return (
+    <Frame size={size}>
+      <defs>
+        <SoftShadow id={s} />
+      </defs>
+      <g filter={`url(#${s})`}>
+        <path d="M11 20 C4 14 5 8 12 12 C8 16 10 19 12 20 Z" fill="#F8FAFC" stroke="#CBD5E1" />
+        <path d="M37 20 C44 14 43 8 36 12 C40 16 38 19 36 20 Z" fill="#F8FAFC" stroke="#CBD5E1" />
+        <path d="M11 30 C4 36 5 42 12 38 C8 34 10 31 12 30 Z" fill="#F1F5F9" stroke="#CBD5E1" />
+        <path d="M37 30 C44 36 43 42 36 38 C40 34 38 31 36 30 Z" fill="#F1F5F9" stroke="#CBD5E1" />
+        <rect x="12" y="18" width="24" height="14" rx="2.4" fill="#22C55E" />
+        <rect x="14" y="20" width="20" height="10" rx="1.4" fill="#86EFAC" />
+        <text x="24" y="28.2" textAnchor="middle" fontSize="9" fontWeight="800" fill="#14532D" fontFamily="ui-sans-serif, system-ui">
+          $
+        </text>
+      </g>
+    </Frame>
+  );
+}
+
+function Scroll({ size = 40 }: GlyphProps) {
+  const s = useMark("sc");
+  return (
+    <Frame size={size}>
+      <defs>
+        <SoftShadow id={s} />
+        <linearGradient id={`${s}-p`} x1="14" y1="10" x2="34" y2="40">
+          <stop stopColor="#FBF3D8" />
+          <stop offset="1" stopColor="#E8C98A" />
+        </linearGradient>
+      </defs>
+      <g filter={`url(#${s})`}>
+        <path d="M14 12 H34 C36.4 12 38 13.6 38 15.6 V35.1 C38 37.1 36.4 38.7 34 38.7 H14 C11.6 38.7 10 37.1 10 35.1 V15.6 C10 13.6 11.6 12 14 12 Z" fill={`url(#${s}-p)`} />
+        <path d="M10 14.2 C10 11.4 13.2 9.4 16.4 10.2 C19 10.8 20 13 20 15 V17 H14 C11.8 17 10 15.7 10 14.2 Z" fill="#E8C98A" />
+        <ellipse cx="15.2" cy="13.4" rx="4.2" ry="3.4" fill="#F6E2B3" />
+        <path d="M38 36.2 C38 39 34.8 41 31.6 40.2 C29 39.6 28 37.4 28 35.4 V33.4 H34 C36.2 33.4 38 34.7 38 36.2 Z" fill="#D4B078" />
+        <ellipse cx="32.8" cy="36.6" rx="4.2" ry="3.4" fill="#E8C98A" />
+        <rect x="16" y="20" width="16" height="1.6" rx="0.7" fill="#D6B56A" />
+        <rect x="16" y="24.4" width="13" height="1.6" rx="0.7" fill="#D6B56A" />
+        <rect x="16" y="28.8" width="15" height="1.6" rx="0.7" fill="#D6B56A" />
       </g>
     </Frame>
   );
@@ -418,11 +524,13 @@ function Clipboard({ size = 40 }: GlyphProps) {
         <SoftShadow id={s} />
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="12" y="10" width="24" height="30" rx="4" fill="#FEF3C7" stroke="#D6B56A" />
-        <rect x="17" y="7" width="14" height="7" rx="2.5" fill="#F59E0B" />
-        <rect x="16" y="20" width="16" height="2.2" rx="1" fill="#D6B56A" />
-        <rect x="16" y="25.5" width="12" height="2.2" rx="1" fill="#D6B56A" />
-        <rect x="16" y="31" width="14" height="2.2" rx="1" fill="#D6B56A" />
+        <rect x="13" y="11" width="22" height="29" rx="3" fill="#F6C453" />
+        <rect x="15" y="14.5" width="18" height="23.5" rx="1.5" fill="#FEF9C3" />
+        <rect x="17.5" y="7.2" width="13" height="8.2" rx="2.2" fill="#CBD5E1" />
+        <rect x="19.2" y="9" width="9.6" height="4.4" rx="1.2" fill="#94A3B8" />
+        <rect x="17.5" y="20" width="13" height="1.7" rx="0.8" fill="#E8D48B" />
+        <rect x="17.5" y="24.2" width="11" height="1.7" rx="0.8" fill="#E8D48B" />
+        <rect x="17.5" y="28.4" width="12" height="1.7" rx="0.8" fill="#E8D48B" />
       </g>
     </Frame>
   );
@@ -503,11 +611,18 @@ function Floppy({ size = 40 }: GlyphProps) {
     <Frame size={size}>
       <defs>
         <SoftShadow id={s} />
+        <linearGradient id={`${s}-b`} x1="12" y1="8" x2="36" y2="40">
+          <stop stopColor="#94A3B8" />
+          <stop offset="1" stopColor="#334155" />
+        </linearGradient>
       </defs>
       <g filter={`url(#${s})`}>
-        <rect x="10" y="8" width="28" height="32" rx="4" fill="#64748B" />
-        <rect x="14" y="8" width="16" height="12" rx="1.5" fill="#E2E8F0" />
-        <rect x="14" y="24" width="20" height="12" rx="2" fill="#F8FAFC" />
+        <path d="M10 11.5 C10 9.6 11.6 8 13.5 8 H32.2 L38 14.2 V36.5 C38 38.4 36.4 40 34.5 40 H13.5 C11.6 40 10 38.4 10 36.5 Z" fill={`url(#${s}-b)`} />
+        <rect x="12.5" y="8" width="16.8" height="12" fill="#1E293B" />
+        <rect x="14" y="10" width="6" height="7" rx="1" fill="#94A3B8" />
+        <rect x="13" y="24" width="22" height="13.5" rx="1.5" fill="#F8FAFC" />
+        <rect x="15.5" y="26.5" width="17" height="2" rx="0.6" fill="#CBD5E1" />
+        <rect x="15.5" y="30.5" width="12" height="2" rx="0.6" fill="#CBD5E1" />
       </g>
     </Frame>
   );
@@ -660,6 +775,8 @@ const GLYPHS: Record<MenuGlyphId, (props: GlyphProps) => ReactNode> = {
   palm: Palm,
   bills: Bills,
   moneyBag: MoneyBag,
+  wingedDollar: WingedDollar,
+  scroll: Scroll,
   heart: Heart,
   target: Target,
   clipboard: Clipboard,
