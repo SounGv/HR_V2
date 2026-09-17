@@ -12,10 +12,9 @@ Drop these files onto `SounGv/GV-HR` at the same paths:
 - `nexa/src/config/mobile-menu.ts`
 - `nexa/src/components/layout/mobile-bottom-nav.tsx`
 
-Live catalog (public):
+Live catalog:
 
-- https://html-preview.github.io/?url=https://raw.githubusercontent.com/SounGv/HR_V2/cursor/mobile-realistic-icons-dab3/preview/mobile-menu.html
-- GitHub Pages (if the workflow succeeds): https://soungv.github.io/HR_V2/
+https://html-preview.github.io/?url=https://raw.githubusercontent.com/SounGv/HR_V2/cursor/mobile-realistic-icons-dab3/preview/index.html
 
 This repo cannot push to `SounGv/GV-HR`, so https://gv-hr.vercel.app is unchanged until those drop-in files are merged there.
 
